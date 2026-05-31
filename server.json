@@ -1,0 +1,64 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.ciinkwia/lithium-vault-mcp",
+  "description": "Primary-source lithium & battery-metals mining data (AISC, reserves, filings) via x402.",
+  "repository": {
+    "url": "https://github.com/ciinkwia/lithium-vault-mcp",
+    "source": "github"
+  },
+  "version": "0.1.1",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "lithium-vault-mcp",
+      "version": "0.1.1",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "CDP_API_KEY_ID",
+          "description": "Coinbase CDP API key ID for the wallet that pays the per-call USDC fee",
+          "isRequired": true,
+          "isSecret": true,
+          "format": "string"
+        },
+        {
+          "name": "CDP_API_KEY_SECRET",
+          "description": "Coinbase CDP API key secret",
+          "isRequired": true,
+          "isSecret": true,
+          "format": "string"
+        },
+        {
+          "name": "CDP_WALLET_SECRET",
+          "description": "Coinbase CDP wallet secret",
+          "isRequired": true,
+          "isSecret": true,
+          "format": "string"
+        },
+        {
+          "name": "CDP_ACCOUNT_NAME",
+          "description": "Named CDP account to pay from (default: lithium-vault-mcp)",
+          "isRequired": false,
+          "isSecret": false,
+          "format": "string"
+        },
+        {
+          "name": "VAULT_BASE_URL",
+          "description": "Override the vault endpoint base URL (default: https://clink-lithium-vault.fly.dev)",
+          "isRequired": false,
+          "isSecret": false,
+          "format": "string"
+        },
+        {
+          "name": "X402_MAX_PRICE",
+          "description": "Max USD price per call the server will pay before refusing (default: 0.25)",
+          "isRequired": false,
+          "isSecret": false,
+          "format": "string"
+        }
+      ]
+    }
+  ]
+}

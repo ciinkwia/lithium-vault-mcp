@@ -96,7 +96,16 @@ ESM JavaScript, Node ≥20. `@modelcontextprotocol/sdk` (stdio), `@x402/fetch` +
 - ◻ Revoke the two temporary publish tokens (`lithium-vault-mcp-pub2`, `-publish`) —
   ciinkwia to do manually; npm's delete uses a native dialog automation can't dismiss.
   They auto-expire 2026-06-06.
-- ◻ List on MCP registries (mcp.so, Smithery).
+- ✅ Published to the **Official MCP Registry** 2026-05-31 as `io.github.ciinkwia/lithium-vault-mcp`
+  v0.1.1 (verified active via registry API). Needed npm republish at 0.1.1 with an `mcpName` field
+  (registry verifies the published artifact carries it) + a `server.json` (validated by
+  `mcp-publisher validate`); GitHub device-flow auth. **PulseMCP auto-ingests from the Official
+  Registry** → free downstream listing.
+- ✅ Submitted to **mcp.so** 2026-05-31 ("Lithium Vault", id `56f01113-…`); pending maintainer review.
+- ✅ **Glama**: auto-indexes public GitHub repos → will appear on its own; manual "Add Server" needs
+  a Glama account + CAPTCHA, so skipped.
 - ◻ Add "MCP server available" + npm link to the awesome-agentic-commerce Ecosystem
   entry (amend [PR #277](https://github.com/Merit-Systems/awesome-agentic-commerce/pull/277)).
 - ◻ Switch to Model C if adoption stalls (the datasource/transport seam makes it additive).
+- ◻ Future republishes: `server.json` + `mcpName` must stay version-synced with `package.json`;
+  bump all three, `npm publish`, then `mcp-publisher publish`.

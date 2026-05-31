@@ -1,6 +1,7 @@
 {
   "name": "lithium-vault-mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "mcpName": "io.github.ciinkwia/lithium-vault-mcp",
   "description": "MCP server for the Lithium Research Vault — primary-source lithium / battery-metals mining data (production, AISC, reserves, ownership, royalties, offtakes, SEC/ASX/TSX filings) paid per call via x402 from your own wallet.",
   "type": "module",
   "bin": {
