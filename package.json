@@ -1,0 +1,53 @@
+{
+  "name": "lithium-vault-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for the Lithium Research Vault — primary-source lithium / battery-metals mining data (production, AISC, reserves, ownership, royalties, offtakes, SEC/ASX/TSX filings) paid per call via x402 from your own wallet.",
+  "type": "module",
+  "bin": {
+    "lithium-vault-mcp": "src/index.js"
+  },
+  "main": "src/index.js",
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "smoke": "node test/smoke.js",
+    "inspect": "npx @modelcontextprotocol/inspector node src/index.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "x402",
+    "lithium",
+    "mining",
+    "battery-metals",
+    "spodumene",
+    "aisc",
+    "commodity",
+    "claude"
+  ],
+  "license": "MIT",
+  "author": "ciinkwia",
+  "homepage": "https://github.com/ciinkwia/lithium-vault-mcp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ciinkwia/lithium-vault-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ciinkwia/lithium-vault-mcp/issues"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.18.0",
+    "@coinbase/cdp-sdk": "^1.48.0",
+    "@x402/fetch": "^2.10.0",
+    "@x402/evm": "^2.10.0",
+    "viem": "^2.48.2",
+    "zod": "^3.25.0",
+    "dotenv": "^16.4.5"
+  }
+}
