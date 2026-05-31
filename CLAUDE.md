@@ -9,9 +9,14 @@ Lithium tie-in: this is the MCP distribution channel for the lithium-research
 vault (see `../clink-wallet/services/vault/`). Part of the vault's go-to-market
 (`../clink-wallet/services/vault/GO_TO_MARKET.md`, item #6).
 
-Scaffolded 2026-05-31. Status: built + end-to-end tested locally against Base
-mainnet. NOT yet published to npm / GitHub / MCP registries (held for ciinkwia's
-approval).
+Scaffolded + PUBLISHED 2026-05-31.
+- **npm:** [`lithium-vault-mcp@0.1.0`](https://www.npmjs.com/package/lithium-vault-mcp)
+  (`npx -y lithium-vault-mcp` verified). Published by npm user `baldwijw` (ciinkwia's
+  npm account, no 2FA) via a temporary granular **bypass-2FA** token — npm rejects a
+  plain token with 403 even on no-2FA accounts. For republishes: `npm login` or a new
+  bypass-2FA + read/write-all-packages granular token, then `npm publish --access public`.
+- **GitHub:** [ciinkwia/lithium-vault-mcp](https://github.com/ciinkwia/lithium-vault-mcp) (public).
+- End-to-end tested against Base mainnet (MCP→x402→vault→data) + price-guard verified.
 
 ## Why Model A (and the seam to Model C)
 
@@ -85,10 +90,13 @@ See [.env.example](./.env.example). Required: `CDP_API_KEY_ID`,
 ESM JavaScript, Node ≥20. `@modelcontextprotocol/sdk` (stdio), `@x402/fetch` +
 `@x402/evm` + `@coinbase/cdp-sdk` + `viem` (same versions as clink-wallet).
 
-## Not yet done (next steps)
+## Done / next steps
 
-- Publish to npm (`npm publish` — name `lithium-vault-mcp` confirmed free).
-- Create GitHub repo `ciinkwia/lithium-vault-mcp`.
-- List on MCP registries (mcp.so, Smithery) and add to the awesome-agentic-commerce
-  Ecosystem entry ("MCP server available").
-- All of the above are outward-facing — get ciinkwia's approval first.
+- ✅ Published to npm + GitHub (2026-05-31, see status above).
+- ◻ Revoke the two temporary publish tokens (`lithium-vault-mcp-pub2`, `-publish`) —
+  ciinkwia to do manually; npm's delete uses a native dialog automation can't dismiss.
+  They auto-expire 2026-06-06.
+- ◻ List on MCP registries (mcp.so, Smithery).
+- ◻ Add "MCP server available" + npm link to the awesome-agentic-commerce Ecosystem
+  entry (amend [PR #277](https://github.com/Merit-Systems/awesome-agentic-commerce/pull/277)).
+- ◻ Switch to Model C if adoption stalls (the datasource/transport seam makes it additive).
