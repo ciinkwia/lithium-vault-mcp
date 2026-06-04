@@ -54,16 +54,17 @@ export const TOOLS = [
     inputShape,
   },
   {
-    name: "lithium_vault_story",
-    tier: "story",
+    name: "lithium_vault_comparables",
+    tier: "comparables",
     priceUsd: "0.20",
-    title: "Lithium vault — cited narrative ($0.20)",
+    title: "Lithium vault — cost-curve & peer ranking ($0.20)",
     description:
-      "LLM-written narrative on any lithium mining company or mine, built ONLY from primary-source vault " +
-      "data. Every numeric/factual sentence carries an inline citation that resolves to a SEC/ASX/TSX " +
-      "filing URL, so the prose is fully auditable. " +
-      "COSTS $0.20 USDC per call, paid from your configured wallet on Base. If you just want the structured " +
-      "rows (not prose), call lithium_vault_raw ($0.05) instead.",
+      "Ranks any lithium mining company or mine against the ENTIRE tracked universe: where its AISC sits on " +
+      "the global cost curve (percentile), resource-size rank, and balance-sheet net-cash survival rank — " +
+      "the analysis that answers 'who survives the downcycle?'. Dataset-level, so it can't be reproduced " +
+      "from a single-entity call. Pure deterministic computation (no LLM); every figure cited to a SEC/ASX/TSX filing. " +
+      "COSTS $0.20 USDC per call, paid from your configured wallet on Base. For the underlying single-entity " +
+      "rows call lithium_vault_raw ($0.05).",
     inputShape,
   },
 ];
@@ -73,5 +74,5 @@ export const TOOLS = [
 export const TIER_PATHS = {
   summary: "/vault/summary",
   raw: "/vault",
-  story: "/vault/story",
+  comparables: "/vault/comparables",
 };
