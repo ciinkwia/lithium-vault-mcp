@@ -58,11 +58,18 @@ Verified 2026-05-31: max $0.01 blocks the $0.02 summary call with no charge.
 |------|------|------|-------|
 | `lithium_vault_summary` | summary | `/vault/summary` | $0.02 |
 | `lithium_vault_raw` | raw | `/vault` | $0.05 |
-| `lithium_vault_story` | story | `/vault/story` | $0.20 |
+| `lithium_vault_comparables` | comparables | `/vault/comparables` | $0.20 |
 
 All take `entity` (ticker or mine name) + `level` (`company`|`mine`). Three
 separate tools (not one with a `tier` arg) so pricing is transparent and the agent
-explicitly opts into the $0.20 story tier.
+explicitly opts into the $0.20 premium tier.
+
+**2026-06-04 (v0.2.0):** the `$0.20` tier was switched from `lithium_vault_story`
+(LLM narrative — a buyer could regenerate it from the $0.05 raw rows) to
+`lithium_vault_comparables` (cost-curve percentile + resource & balance-sheet ranking
+vs the whole tracked universe — un-reproducible from a single-entity call). The vault's
+`/vault/story` endpoint still serves for back-compat but is de-listed from discovery;
+this wrapper no longer exposes it.
 
 ## Testing
 
