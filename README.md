@@ -10,7 +10,7 @@ Data comes from the **Lithium Research Vault** ([listed on agentic.market](https
 |------|-------|---------|
 | `lithium_vault_summary` | $0.02 | One-row headline: latest production, volume-weighted AISC, realized price, cash/debt/EBITDA/FCF, reserves, top holder, source filing |
 | `lithium_vault_raw` | $0.05 | Full structured rows: every period of production, AISC, reserves, ownership, royalties, offtakes, financials |
-| `lithium_vault_story` | $0.20 | LLM narrative, every sentence cited to a primary filing URL |
+| `lithium_vault_comparables` | $0.20 | Cost-curve percentile + nearest peers, resource-size rank, and balance-sheet survival rank vs the whole tracked universe — every figure cited |
 
 Each takes `entity` (a ticker like `ALB`, `SQM`, `PILBF`, `ATUSF`, or a mine name like `Greenbushes`, `Pilgangoora`, `Grota do Cirilo`) and `level` (`company` or `mine`). If the entity isn't in the vault you get a `400` and **no charge**.
 
