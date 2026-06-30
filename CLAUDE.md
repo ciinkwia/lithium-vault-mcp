@@ -100,9 +100,13 @@ ESM JavaScript, Node ≥20. `@modelcontextprotocol/sdk` (stdio), `@x402/fetch` +
 ## Done / next steps
 
 - ✅ Published to npm + GitHub (2026-05-31, see status above).
-- ◻ Revoke the two temporary publish tokens (`lithium-vault-mcp-pub2`, `-publish`) —
-  ciinkwia to do manually; npm's delete uses a native dialog automation can't dismiss.
-  They auto-expire 2026-06-06.
+- ✅ **v0.2.0 shipped 2026-06-22** (story→comparables $0.20 tier swap): published to **npm**
+  (`npm view` → 0.2.0, dist-tag latest) and **re-published to the Official MCP Registry**
+  (`mcp-publisher publish` → `io.github.ciinkwia/lithium-vault-mcp` 0.2.0, verified `isLatest:true`,
+  0.1.1 demoted). npm publish used a granular bypass-2FA token scoped to this package only
+  (`lithium-vault-mcp-pub-2026-06-22`), **revoked immediately after** publish.
+- ✅ Temporary publish tokens cleaned up: the two May tokens (`-pub2`, `-publish`) auto-expired
+  2026-06-06; the 2026-06-22 token was revoked post-publish. No standing write credential remains.
 - ✅ Published to the **Official MCP Registry** 2026-05-31 as `io.github.ciinkwia/lithium-vault-mcp`
   v0.1.1 (verified active via registry API). Needed npm republish at 0.1.1 with an `mcpName` field
   (registry verifies the published artifact carries it) + a `server.json` (validated by

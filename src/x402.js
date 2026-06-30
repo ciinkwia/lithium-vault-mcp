@@ -5,37 +5,40 @@
 // response demands; CDP's facilitator settles it on Base. The caller pays; CDP
 // covers gas.
 //
-// Requires CDP_API_KEY_ID, CDP_API_KEY_SECRET, CDP_WALLET_SECRET in the environment.
+// Migrated 2026-06-30 to the CDP-compatible x402 1.2.x line. The @x402/* 2.17
+// fork emitted a v2 payload missing top-level scheme/network, which CDP's hosted
+// facilitator rejected at verify. x402-fetch@1.2.0 emits the
+// `{x402Version, scheme, network, payload}` shape CDP accepts.
 //
-// Note: the per-call price ceiling is NOT enforced here — wrapFetchWithPayment in
-// @x402/fetch v2 takes only (fetch, client). The ceiling is enforced as a
-// pre-flight check in datasource.js, which reads the 402's advertised amount
-// before authorizing payment.
+// Requires CDP_API_KEY_ID, CDP_API_KEY_SECRET, CDP_WALLET_SECRET in the environment.
 
 import { CdpClient } from "@coinbase/cdp-sdk";
-import { x402Client, wrapFetchWithPayment } from "@x402/fetch";
-import { ExactEvmScheme } from "@x402/evm/exact/client";
+import { wrapFetchWithPayment } from "x402-fetch";
 import { toAccount } from "viem/accounts";
 
 /**
  * @param {object} opts
  * @param {string} opts.accountName  Named CDP account to pay from (auto-created).
+ * @param {bigint} [opts.maxAtomic]  Per-call ceiling in atomic USDC (6 decimals).
+ *   Passed to wrapFetchWithPayment as the native maxValue guard. Defense-in-depth
+ *   alongside X402DataSource._priceGuard (which refuses BEFORE signing).
  * @returns {Promise<{ paidFetch: typeof fetch, address: string }>}
  */
-export async function makePaidFetch({ accountName }) {
+export async function makePaidFetch({ accountName, maxAtomic }) {
   const cdp = new CdpClient();
   const account = await cdp.evm.getOrCreateAccount({ name: accountName });
 
+  // x402 1.2.x's isAccount() requires ALL of sign/signMessage/signTypedData/
+  // signTransaction. CDP's EvmServerAccount exposes every one; omitting `sign`
+  // makes createPaymentHeader throw "Invalid evm wallet client provided".
   const signer = toAccount({
     address: account.address,
+    sign: async (parameters) => account.sign(parameters),
     signMessage: async ({ message }) => account.signMessage({ message }),
     signTransaction: async (tx) => account.signTransaction(tx),
     signTypedData: async (td) => account.signTypedData(td),
   });
 
-  const client = new x402Client();
-  client.register("eip155:*", new ExactEvmScheme(signer));
-
-  const paidFetch = wrapFetchWithPayment(fetch, client);
+  const paidFetch = wrapFetchWithPayment(fetch, signer, maxAtomic);
   return { paidFetch, address: account.address };
 }

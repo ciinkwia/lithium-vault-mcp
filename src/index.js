@@ -34,14 +34,14 @@ function requireEnv() {
 async function main() {
   requireEnv();
 
-  const { paidFetch, address } = await makePaidFetch({ accountName: ACCOUNT });
   const maxAtomic =
     MAX_PRICE && Number(MAX_PRICE) > 0
       ? BigInt(Math.round(Number(MAX_PRICE) * 1e6))
       : undefined;
+  const { paidFetch, address } = await makePaidFetch({ accountName: ACCOUNT, maxAtomic });
   const dataSource = new X402DataSource({ baseUrl: BASE_URL, paidFetch, maxAtomic });
 
-  const server = new McpServer({ name: "lithium-vault-mcp", version: "0.1.0" });
+  const server = new McpServer({ name: "lithium-vault-mcp", version: "0.3.0" });
 
   for (const tool of TOOLS) {
     server.registerTool(

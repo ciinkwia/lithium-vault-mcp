@@ -30,6 +30,10 @@ export class X402DataSource {
   // Pre-flight: read the 402's advertised price WITHOUT paying, and refuse if even
   // the cheapest accepted option exceeds the ceiling. Degrades to "allow" if the
   // price can't be read (the route price is server-fixed and low regardless).
+  //
+  // NOTE: x402-fetch@1.2.x ALSO enforces a native maxValue (wired in x402.js), so
+  // there are now two layers: this pre-flight refuses BEFORE signing (clearer error,
+  // no wallet touch), and maxValue is the in-library backstop. Belt and suspenders.
   async _priceGuard(url) {
     if (this.maxAtomic === undefined) return { blocked: false };
     let accepts;
