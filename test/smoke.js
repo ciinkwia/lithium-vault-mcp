@@ -45,7 +45,7 @@ for (const t of tools) {
 }
 
 const names = tools.map((t) => t.name).sort();
-const expected = ["lithium_vault_raw", "lithium_vault_story", "lithium_vault_summary"];
+const expected = ["lithium_vault_comparables", "lithium_vault_raw", "lithium_vault_summary"];
 const ok = JSON.stringify(names) === JSON.stringify(expected);
 console.log(`\nTool catalog ${ok ? "OK" : "*** MISMATCH ***"}`);
 
