@@ -1,8 +1,8 @@
 {
   "name": "lithium-vault-mcp",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "mcpName": "io.github.ciinkwia/lithium-vault-mcp",
-  "description": "MCP server for the Lithium Research Vault — primary-source lithium / battery-metals mining data (production, AISC, reserves, ownership, royalties, offtakes, SEC/ASX/TSX filings) paid per call via x402 from your own wallet.",
+  "description": "MCP server for the Lithium Research Vault \u00e2\u20ac\u201d primary-source lithium / battery-metals mining data (production, AISC, reserves, ownership, royalties, offtakes, SEC/ASX/TSX filings) paid per call via x402 from your own wallet.",
   "type": "module",
   "bin": {
     "lithium-vault-mcp": "src/index.js"
@@ -43,12 +43,12 @@
     "url": "https://github.com/ciinkwia/lithium-vault-mcp/issues"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.18.0",
     "@coinbase/cdp-sdk": "^1.48.0",
-    "x402-fetch": "1.2.0",
-    "x402": "1.2.0",
+    "@modelcontextprotocol/sdk": "^1.18.0",
+    "@x402/evm": "^2.21.0",
+    "@x402/fetch": "^2.21.0",
+    "dotenv": "^16.4.5",
     "viem": "^2.48.2",
-    "zod": "^3.25.0",
-    "dotenv": "^16.4.5"
+    "zod": "^3.25.0"
   }
 }
