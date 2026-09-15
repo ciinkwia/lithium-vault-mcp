@@ -14,6 +14,20 @@ import { TIER_PATHS } from "./tools.js";
 
 const usd = (atomic) => "$" + (Number(atomic) / 1e6).toFixed(2);
 
+// Pure URL builder, exported for testing without a network/wallet. Every tool
+// declares its own zod `inputShape` (tools.js) and index.js passes whatever
+// params the caller supplied straight through here — so a tier that doesn't
+// take {entity, level} (e.g. lithium_spodumene_history, which takes optional
+// interval/from/to) needs no special-casing.
+export function buildUrl(baseUrl, path, params = {}) {
+  const url = new URL(`${baseUrl.replace(/\/+$/, "")}${path}`);
+  for (const [key, value] of Object.entries(params)) {
+    if (value === undefined || value === null || value === "") continue;
+    url.searchParams.set(key, String(value));
+  }
+  return url.toString();
+}
+
 export class X402DataSource {
   /**
    * @param {object} opts
@@ -69,13 +83,16 @@ export class X402DataSource {
     return { blocked: false };
   }
 
-  async fetchTier(tier, { entity, level }) {
+  // `params` is whatever the calling tool's inputShape declared — {entity,
+  // level} for the per-entity tiers, {interval, from, to} (all optional) for
+  // lithium_spodumene_history — passed straight through to the matching
+  // endpoint via buildUrl.
+  async fetchTier(tier, params = {}) {
     const path = TIER_PATHS[tier];
     if (!path) return { ok: false, error: `Unknown tier "${tier}".`, status: 0 };
 
-    const url = `${this.baseUrl}${path}?entity=${encodeURIComponent(
-      entity
-    )}&level=${encodeURIComponent(level)}`;
+    const url = buildUrl(this.baseUrl, path, params);
+    const { entity, level } = params;
 
     const guard = await this._priceGuard(url);
     if (guard.blocked) return { ok: false, status: 0, error: guard.error };
@@ -101,10 +118,13 @@ export class X402DataSource {
     if (res.status === 200) return { ok: true, data: body };
 
     if (res.status === 400) {
+      const detail = entity
+        ? `"${entity}" was not found in the vault at level=${level}. Check the ticker/mine name, or try the other level.`
+        : `${body?.message ?? "check the request parameters"}.`;
       return {
         ok: false,
         status: 400,
-        error: `"${entity}" was not found in the vault at level=${level} (no payment was charged). Check the ticker/mine name, or try the other level.`,
+        error: `Invalid request (no payment was charged): ${detail}`,
         body,
       };
     }

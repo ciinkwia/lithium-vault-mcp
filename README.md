@@ -11,8 +11,17 @@ Data comes from the **Lithium Research Vault** ([listed on agentic.market](https
 | `lithium_vault_summary` | $0.02 | One-row headline: latest production, volume-weighted AISC, realized price, cash/debt/EBITDA/FCF, reserves, top holder, source filing |
 | `lithium_vault_raw` | $0.05 | Full structured rows: every period of production, AISC, reserves, ownership, royalties, offtakes, financials |
 | `lithium_vault_comparables` | $0.20 | Cost-curve percentile + nearest peers, resource-size rank, and balance-sheet survival rank vs the whole tracked universe — every figure cited |
+| `lithium_vault_verdict` | $0.05 | A cited, plain-language read: cost-curve position, balance-sheet survival, permitting/dev stage, risks, strengths, and data gaps — facts only, **not investment advice** |
+| `lithium_spodumene_history` | $0.05 | Historical SC6 spodumene concentrate benchmark price series (daily/weekly/monthly), market-wide — no entity needed |
 
-Each takes `entity` (a ticker like `ALB`, `SQM`, `PILBF`, `ATUSF`, or a mine name like `Greenbushes`, `Pilgangoora`, `Grota do Cirilo`) and `level` (`company` or `mine`). If the entity isn't in the vault you get a `400` and **no charge**.
+`lithium_vault_summary`, `lithium_vault_raw`, `lithium_vault_comparables`, and `lithium_vault_verdict`
+each take `entity` (a ticker like `ALB`, `SQM`, `PILBF`, `ATUSF`, or a mine name like `Greenbushes`,
+`Pilgangoora`, `Grota do Cirilo`) and `level` (`company` or `mine`). If the entity isn't in the vault
+you get a `400` and **no charge**.
+
+`lithium_spodumene_history` takes no entity — it's a single market-wide price series. Optional
+inputs: `interval` (`daily` | `weekly` | `monthly`, default `daily`), `from` and `to` (`YYYY-MM-DD`).
+Omit all three for the full daily history.
 
 ## Prerequisites
 
@@ -67,7 +76,7 @@ claude mcp add lithium-vault \
 your agent → MCP tool call → this server → [x402 402 → pay USDC from your wallet → retry] → vault → data
 ```
 
-The server reads the endpoint's advertised price first and enforces `X402_MAX_PRICE` before authorizing any payment. You only ever pay the fixed per-tier price ($0.02 / $0.05 / $0.20).
+The server reads the endpoint's advertised price first and enforces `X402_MAX_PRICE` before authorizing any payment. You only ever pay the fixed per-tier price ($0.02 / $0.05 / $0.20 — see the tool table above for which tool costs what). The default `X402_MAX_PRICE` of `0.25` already covers every tool, including the $0.20 `lithium_vault_comparables` tier.
 
 ## License
 

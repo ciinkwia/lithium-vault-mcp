@@ -7,7 +7,7 @@
 
 import { z } from "zod";
 
-// Every tier takes the same two inputs.
+// Every entity-scoped tier takes the same two inputs.
 const inputShape = {
   entity: z
     .string()
@@ -23,6 +23,15 @@ const inputShape = {
       "company → operator-level rows for a ticker; " +
         "mine → asset-level rows aggregated across every operator of that mine (e.g. Greenbushes returns IGO + ALB + Tianqi)."
     ),
+};
+
+const spodumeneInputShape = {
+  interval: z
+    .enum(["daily", "weekly", "monthly"])
+    .optional()
+    .describe("Bucket size for the price series — \"daily\", \"weekly\", or \"monthly\" (default: daily)."),
+  from: z.string().min(4).max(10).optional().describe("Start date, YYYY-MM-DD. Omit for the full history."),
+  to: z.string().min(4).max(10).optional().describe("End date, YYYY-MM-DD. Omit for up to the latest price."),
 };
 
 export const TOOLS = [
@@ -67,6 +76,35 @@ export const TOOLS = [
       "rows call lithium_vault_raw ($0.05).",
     inputShape,
   },
+  {
+    name: "lithium_vault_verdict",
+    tier: "verdict",
+    priceUsd: "0.05",
+    title: "Lithium vault — plain-language verdict ($0.05)",
+    description:
+      "A cited, plain-language read on any lithium / battery-metals mining company or producing mine: " +
+      "where it sits on the cost curve, whether the balance sheet can survive a downcycle, its " +
+      "permitting/development stage, key risks, key strengths, and where the vault's data has gaps — " +
+      "written entirely from primary-source SEC/ASX/TSX filings, facts only. This is NOT investment " +
+      "advice and makes no buy/sell/hold call — it is a synthesis of what's on file, not a " +
+      "recommendation. COSTS $0.05 USDC per call, paid from your configured wallet on Base. For the " +
+      "underlying rows this verdict is built from, use lithium_vault_raw.",
+    inputShape,
+  },
+  {
+    name: "lithium_spodumene_history",
+    tier: "spodumene_history",
+    priceUsd: "0.05",
+    title: "Lithium vault — spodumene concentrate price history ($0.05)",
+    description:
+      "Historical SC6 spodumene concentrate price series (the benchmark hardrock lithium feedstock " +
+      "price), bucketed daily, weekly, or monthly, over any date range. Use to chart the cost-curve " +
+      "backdrop over time, compare a company's realized price against the benchmark on a given date, " +
+      "or check how the market has moved since a filing. No entity/level needed — this is a single " +
+      "market-wide series, not per-company. " +
+      "COSTS $0.05 USDC per call, paid from your configured wallet on Base.",
+    inputShape: spodumeneInputShape,
+  },
 ];
 
 // tier -> vault path. Used by data sources; kept next to the catalog so adding a
@@ -75,4 +113,6 @@ export const TIER_PATHS = {
   summary: "/vault/summary",
   raw: "/vault",
   comparables: "/vault/comparables",
+  verdict: "/vault/verdict",
+  spodumene_history: "/vault/spodumene-history",
 };
